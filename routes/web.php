@@ -20,3 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/*
+ * Backend Routes
+ *
+ * These routes can only be accessed by users with type `admin`
+ */
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    includeRouteFiles(__DIR__.'/admin/');
+});

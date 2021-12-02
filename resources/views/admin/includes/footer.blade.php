@@ -1,16 +1,9 @@
-<footer class="c-footer">
-    <div>
-        <strong>
-            @lang('Copyright') &copy; {{ date('Y') }}
-            <x-utils.link href="http://laravel.com" target="_blank" :text="__(appName())" />
-        </strong>
-
-        @lang('All Rights Reserved')
+<!-- Main Footer -->
+<footer class="main-footer">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+      Anything you want
     </div>
-
-    <div class="mfs-auto">
-        @lang('Powered by')
-        <x-utils.link href="http://laravel.com" target="_blank" :text="__(appName())" /> &
-        <x-utils.link href="https://coreui.io" target="_blank" text="CoreUI" />
-    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
 </footer>
