@@ -176,7 +176,7 @@ return [
         App\Providers\HelperServiceProvider::class,
         
         App\Providers\RouteServiceProvider::class,
-        
+        Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*
