@@ -21,7 +21,7 @@
         </li>
 
         <li class="nav-item menu-open">
-          <a href="#" class="nav-link active">
+          <a href="#" class="nav-link {{ activeClass(Route::is('admin.users.*') || Route::is('admin.roles.*'), 'active') }}">
             <i class="nav-icon fas fa-users-cog"></i>
             <p>
               User Management
@@ -30,13 +30,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('admin.users.list') }}" class="nav-link active">
+              <a href="{{ route('admin.users.list') }}" class="nav-link {{ activeClass(Route::is('admin.users.*'), 'active')}} ">
                 <i class="far fa-circle nav-icon"></i>
                 <p>List Users</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="{{ route('admin.roles.list') }}" class="nav-link {{ activeClass(Route::is('admin.roles.*'), 'active') }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Roles</p>
               </a>

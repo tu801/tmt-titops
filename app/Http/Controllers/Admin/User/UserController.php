@@ -8,6 +8,7 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
+use Illuminate\Support\Arr;
 
 /**
  * Class class UserController
@@ -110,7 +111,7 @@ class UserController extends Controller
         if(!empty($input['password'])){ 
             $input['password'] = Hash::make($input['password']);
         }else{
-            $input = array_except($input,array('password'));    
+            $input = Arr::except($input,array('password'));    
         }
     
         $user = User::find($id);
