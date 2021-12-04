@@ -20,7 +20,7 @@ class AddProductTable extends Migration
             $table->unsignedDecimal('price', 8, 2)->default(0.0);
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->text('description')->nullable();
-            $table->json('images')->nullable();
+            $table->text('images')->nullable();
             $table->timestamps();
         });
 

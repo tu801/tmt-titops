@@ -42,5 +42,20 @@ Route::group(['middleware' => ['auth']], function() {
         Route::delete('delete/{id}', [RoleController::class, 'delete'])->name('delete');
 
     });
-    
+
+    Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+        Route::get('/', [ProductController::class, 'index'])->name('list');
+
+        Route::get('create', [ProductController::class, 'create'])->name('create');
+        Route::post('create', [ProductController::class, 'store']);
+
+        Route::get('edit/{id}', [ProductController::class, 'edit'])->name('edit');
+        Route::post('edit/{id}', [ProductController::class, 'update']);
+
+        Route::get('detail/{id}', [ProductController::class, 'detail'])->name('detail');
+
+        Route::delete('delete/{id}', [ProductController::class, 'delete'])->name('delete');
+
+    });
+
 });

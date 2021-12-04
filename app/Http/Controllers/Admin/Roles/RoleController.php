@@ -14,18 +14,6 @@ use DB;
  */
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    function __construct()
-    {
-        // $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-        // $this->middleware('permission:role-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-    }
     
     /**
      * Display a listing of the resource.
@@ -36,8 +24,6 @@ class RoleController extends Controller
     {
         $roles = Role::orderBy('id','DESC')->paginate(5);
 
-        $u = \Auth::user();
-$user = User::with('roles.permissions')->with('permissions')->find($u->id); dd($user->permissions);
         return view('admin.roles.index',compact('roles'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -134,7 +120,7 @@ $user = User::with('roles.permissions')->with('permissions')->find($u->id); dd($
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         DB::table("roles")->where('id',$id)->delete();
         return redirect()->route('admin.roles.list')

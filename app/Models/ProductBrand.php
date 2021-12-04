@@ -9,9 +9,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class ProductBrand extends Model
 {
-    protected $table = 'product';
+    protected $table = 'product_brand';
     protected $primaryKey = 'id';
     /**
      * The attributes that are mass assignable.
@@ -19,7 +19,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'price', 'brand_id', 'description', 'images'
+        'name',
     ];
 
     protected $dates = [
