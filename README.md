@@ -39,6 +39,7 @@ Run the follow command:
 - `docker-compose up -d` => run project
 ` `docker-compose exec app php artisan key:generate` => generate laravel APP KEY
 - `docker-compose exec app php artisan migrate` => migrate database
+- `docker-compose exec app php artisan db:seed --class=DatabaseSeeder` => insert admin user and roles
 
 
 ## Learning Laravel

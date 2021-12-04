@@ -12,7 +12,7 @@ use Hash;
 /**
  * Class class UserController
  */
-class UserController
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -59,7 +59,7 @@ class UserController
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('admin.users.index')
+        return redirect()->route('admin.users.list')
                         ->with('success','User created successfully');
     }
     
@@ -119,7 +119,7 @@ class UserController
     
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('users.index')
+        return redirect()->route('admin.users.list')
                         ->with('success','User updated successfully');
     }
     
@@ -132,7 +132,7 @@ class UserController
     public function delete($id)
     {
         User::find($id)->delete();
-        return redirect()->route('users.index')
+        return redirect()->route('admin.users.list')
                         ->with('success','User deleted successfully');
     }
 

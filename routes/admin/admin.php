@@ -13,16 +13,30 @@ Route::group(['middleware' => ['auth']], function() {
         ->name('dashboard');
 
     Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
-        Route::get('/', [UserController::class, 'index']);
+        Route::get('/', [UserController::class, 'index'])->name('list');
         Route::get('create', [UserController::class, 'create'])->name('create');
         Route::post('create', [UserController::class, 'store']);
 
-        Route::get('edit', [UserController::class, 'edit'])->name('edit');
-        Route::post('edit', [UserController::class, 'update']);
+        Route::get('edit/{id}', [UserController::class, 'edit'])->name('edit');
+        Route::post('edit/{id}', [UserController::class, 'update']);
 
-        Route::get('detail', [UserController::class, 'detail'])->name('detail');
+        Route::get('detail/{id}', [UserController::class, 'detail'])->name('detail');
 
-        Route::get('delete', [UserController::class, 'delete'])->name('delete');
+        Route::delete('delete/{id}', [UserController::class, 'delete'])->name('delete');
+
+    });
+
+    Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
+        Route::get('/', [UserController::class, 'index'])->name('list');
+        Route::get('create', [UserController::class, 'create'])->name('create');
+        Route::post('create', [UserController::class, 'store']);
+
+        Route::get('edit/{id}', [UserController::class, 'edit'])->name('edit');
+        Route::post('edit/{id}', [UserController::class, 'update']);
+
+        Route::get('detail/{id}', [UserController::class, 'detail'])->name('detail');
+
+        Route::delete('delete/{id}', [UserController::class, 'delete'])->name('delete');
 
     });
     
