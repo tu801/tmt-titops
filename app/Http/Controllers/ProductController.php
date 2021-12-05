@@ -1,11 +1,16 @@
 <?php
+/**
+ * @author tmtuan
+ * created Date: 12/5/2021
+ * project: titops
+ */
 
 namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class ProductController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -22,11 +27,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function detail($id)
     {
-        $products = Product::with(['BrandInfo' => function($qr){
+        $product = Product::with(['BrandInfo' => function($qr){
             $qr->select(['id', 'name']);
-        }])->get();
-        return view('frontend.home', compact('products'));
+        }])->find($id);
+        return view('frontend.product.detail', compact('product'));
     }
 }

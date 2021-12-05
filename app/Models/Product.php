@@ -26,4 +26,10 @@ class Product extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function BrandInfo()
+    {
+        return $this->belongsTo(ProductBrand::class,'brand_id','id');
+    }
+
 }

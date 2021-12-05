@@ -14,6 +14,7 @@ class CreateAdminUserSeeder extends Seeder
      */
     public function run()
     {
+        //add admin user
         $chkUser = User::where('email', 'tmtuan801@gmail.com')->first();
         if ( !isset($chkUser->id) ) {
             $user = User::create([
@@ -32,6 +33,22 @@ class CreateAdminUserSeeder extends Seeder
        
             $user->assignRole([$role->id]);
         }
-        
+
+
+        //add customer user
+        $chkUser = User::where('email', 'customer@test.com')->first();
+        if ( !isset($chkUser->id) ) {
+            $user = User::create([
+                'name' => 'customer', 
+                'email' => 'customer@test.com',
+                'password' => bcrypt('123qwe123')
+            ]);
+      
+            $chkRole = Role::where('name', 'Guest')->first();
+            if ( !isset($chkRole->id) ) $role = Role::create(['name' => 'Guest']);
+            else $role = Role::where('name', 'Guest')->first();
+       
+            $user->assignRole([$role->id]);
+        }
     }
 }

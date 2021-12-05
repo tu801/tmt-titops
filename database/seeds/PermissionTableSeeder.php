@@ -13,10 +13,6 @@ class PermissionTableSeeder extends Seeder
      */
     public function run()
     {
-        //add guest role
-        $chkRole = Role::where('name', 'Guest')->first();
-        if ( !isset($chkRole->id) ) $role = Role::create(['name' => 'Guest']);
-
         //add permission
         $permissions = [
             'role-list',
