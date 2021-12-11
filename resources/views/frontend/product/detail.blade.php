@@ -8,12 +8,31 @@
     <div class="row">
       <div class="col-md-6 mb-4 mb-md-0">
         <div class="row product-gallery mx-1">
-  
-            <figure class="view main-img">
-                <img src="{{ asset('storage/uploads/products/'.$product->images) }}"
-                    class="img-fluid z-depth-1">
-              </figure>
+
+          <div class="col-12 mb-0">
+            <figure class="view overlay rounded z-depth-1 main-img" id="mainImg">
+              <img src="{{ asset('storage/uploads/products/'.$product->slide[0]->name) }}" class="img-fluid z-depth-1">
+            </figure>
+            
           </div>
+
+          <div class="col-12">
+            <div class="row">
+              @foreach ($product->slide as $img)
+              <div class="col-3">
+                <div class="view overlay rounded z-depth-1 gallery-item">
+                  <img src="{{ asset('storage/uploads/products/'.$img->name) }}" class="img-fluid imgSlide"
+                  data-img="{{ asset('storage/uploads/products/'.$img->name) }}" >
+                  <div class="mask rgba-white-slight"></div>
+                </div>
+              </div>
+              @endforeach
+              
+
+            </div>
+          </div>
+
+        </div>
   
       </div>
       <div class="col-md-6">
@@ -26,6 +45,8 @@
         <p class="pt-1">{{$product->description}}</p>
 
         <hr>
+        <form action="{{ route('addToCart') }}" >
+          @csrf
         <div class="table-responsive mb-2">
           <table class="table table-sm table-borderless">
             <tbody>
@@ -46,6 +67,8 @@
         
         <button type="button" class="btn btn-primary btn-md mr-1 mb-2"><i
             class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
+          <input type="hidden" name="product" value="{{ $product->id }}">
+        </form>
       </div>
     </div>
   
@@ -53,4 +76,15 @@
 <!--Section: Block Content-->
 </div>
 
+@endsection
+
+@section('scripts')
+  <script>
+    $(document).ready(function(){
+      $('.imgSlide').on('click', function(e){
+        var imgUrl = $(this).attr('data-img');
+        $('#mainImg').html('<img src="' + imgUrl + '" class="img-fluid z-depth-1">');
+      });
+    });
+  </script>
 @endsection

@@ -7,6 +7,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -23,7 +24,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the product detail page.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -32,6 +33,16 @@ class ProductController extends Controller
         $product = Product::with(['BrandInfo' => function($qr){
             $qr->select(['id', 'name']);
         }])->find($id);
-        return view('frontend.product.detail', compact('product'));
+
+        //get customer pending order
+        $user = auth()->user();
+        $order = Order::where('user_init', $user->id)
+                ->where('status', 'pending')->first();
+
+        return view('frontend.product.detail', compact('product', 'order'));
+    }
+
+    public function addProductToOrder() {
+
     }
 }

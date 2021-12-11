@@ -9,8 +9,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -33,7 +31,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -66,7 +63,20 @@
                                     </form>
                                 </div>
                             </li>
+
+                            <li class="nav-item dropdown">
+                                <a id="cartDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Your Cart
+                                </a>
+    
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="cartDropdown"> 
+                                    {{ print_r($order) }}
+                                </div>
+                            </li>
+
                         @endguest
+
                     </ul>
                 </div>
             </div>
@@ -76,5 +86,12 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Scripts -->
+    @stack('before-scripts')    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    @yield('scripts')
+    @stack('after-scripts')
 </body>
 </html>

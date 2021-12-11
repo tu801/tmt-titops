@@ -32,4 +32,14 @@ class Product extends Model
         return $this->belongsTo(ProductBrand::class,'brand_id','id');
     }
 
+    /**
+     * get images slide data
+     * @return mixed
+     */
+    public function getSlideAttribute() {
+
+        $imgData = ProductImage::select('id', 'user_init', 'product_id', 'name')
+                ->where('product_id', $this->id)->get();
+        return $this->attributes['slide'] = $imgData;
+    }
 }

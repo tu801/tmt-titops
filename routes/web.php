@@ -22,6 +22,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/product-detail/{id}', 'ProductController@detail')->name('productDetail');
 
+
+Route::get('/add-to-cart', 'HomeController@index')->name('addToCart');
+
 /*
  * Backend Routes
  *

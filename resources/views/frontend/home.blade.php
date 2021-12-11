@@ -11,8 +11,8 @@
         <div class="col-lg-8 mx-auto">
             <!-- List group-->
             <ul class="list-group shadow">
-                @foreach ($products as $item)
-                    <!-- list group item-->
+                @foreach ($products as $item) 
+                    <!-- list group item--> 
                 <li class="list-group-item">
                     <!-- Custom content-->
                     <div class="media align-items-lg-center flex-column flex-lg-row p-3">
@@ -25,7 +25,7 @@
                                 
                             </div>
                         </div>
-                        <img src="{{ asset('storage/uploads/products/'.$item->images) }}" alt="{{ $item->name }}" width="200" class="ml-lg-5 order-1 order-lg-2">
+                        <img src="{{ asset('storage/uploads/products/'.$item->slide[0]->name) }}" alt="{{ $item->name }}" width="200" class="ml-lg-5 order-1 order-lg-2">
                     </div> <!-- End -->
                     <a href="{{ route('productDetail', $item->id) }}" class="btn btn-success">{{ __('Detail')}}</a>
                 </li> <!-- End -->
