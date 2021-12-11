@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,12 @@ class HomeController extends Controller
         $products = Product::with(['BrandInfo' => function($qr){
             $qr->select(['id', 'name']);
         }])->get();
-        return view('frontend.home', compact('products'));
+
+        //get customer pending order
+        $user = auth()->user();
+        $order = Order::where('user_init', $user->id)
+                ->where('status', 'pending')->first();
+                
+        return view('frontend.home', compact('products', 'order'));
     }
 }

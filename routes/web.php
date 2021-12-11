@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/product-detail/{id}', 'ProductController@detail')->name('productDetail');
 
 
-Route::get('/add-to-cart', 'HomeController@index')->name('addToCart');
+Route::post('add-to-cart', 'ProductController@addProductToOrder')->name('addToCart');
 
 /*
  * Backend Routes

@@ -12,8 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/admin/admin.js', 'public/js/admin.js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .sass('resources/sass/module/cart.scss', 'public/css/cart');
 
-    
+
 mix.copy('node_modules/admin-lte/dist/img/AdminLTELogo.png', 'public/admin/dist/img/AdminLTELogo.png');
 mix.copy('node_modules/admin-lte/dist/img/user2-160x160.jpg', 'public/admin/dist/img/user2-160x160.jpg');

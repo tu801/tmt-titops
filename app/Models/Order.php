@@ -33,11 +33,16 @@ class Order extends Model
      * get images slide data
      * @return mixed
      */
-    public function getSlideAttribute() {
+    public function getItemsAttribute() {
+        $items = OrderItem::select(['product_id', 'order_item.price', 'quantity', 'name'])
+                ->join('product', 'product.id', '=', 'order_item.product_id')
+                ->where('order_id', $this->id)->get();
 
-        $imgData = ProductImage::select('id', 'user_init', 'product_id', 'name')
-                ->where('product_id', $this->id)->get();
-        return $this->attributes['slide'] = $imgData;
+        foreach ($items as $item) {
+            $img = ProductImage::where('product_id', $item->product_id)->first();
+            $item->image = $img->name;
+        }
+        return $this->attributes['items'] = $items;
     }
-    
+
 }

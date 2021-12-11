@@ -16,6 +16,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/cart/cart.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -68,10 +69,43 @@
                                 <a id="cartDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="fas fa-shopping-cart"></i>
                                     Your Cart
+                                    @if( count($order->items) > 0 )
+                                        <span class="badge" id="cartCount" >{{count($order->items)}}</span>
+                                    @endif
                                 </a>
-    
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="cartDropdown"> 
-                                    {{ print_r($order) }}
+
+                                <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="cartDropdown">
+                                    @if (empty($order) )
+                                    <p>No item in your cart</p>
+                                    <p>Please add new item</p>
+
+                                    @else
+                                        <div class="container">
+                                            <div class="shopping-cart" id="shpCart">
+                                                <div class="shopping-cart-header">
+                                                    <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">{{count($order->items)}}</span>
+                                                    <div class="shopping-cart-total">
+                                                        <span class="lighter-text">Total:</span>
+                                                        <span class="main-color-text">${{ number_format($order->total, 2) }}</span>
+                                                    </div>
+                                                </div> <!--end shopping-cart-header -->
+
+                                                <ul class="shopping-cart-items">
+                                                    @foreach($order->items as $item)
+                                                    <li class="clearfix">
+                                                        <img src="{{ asset('storage/uploads/products/'.$item->image) }}" alt="{{ $item->name  }}" width="70px" height="70px" />
+                                                        <span class="item-name">{{ $item->name  }}</span>
+                                                        <span class="item-price">${{ number_format($item->price,2)  }}</span>
+                                                        <span class="item-quantity">Quantity: {{ $item->quantity }}</span>
+                                                    </li>
+                                                    @endforeach
+
+                                                </ul>
+
+{{--                                                <a href="#" class="button">Checkout</a>--}}
+                                            </div> <!--end shopping-cart -->
+                                        </div> <!--end container -->
+                                    @endif
                                 </div>
                             </li>
 
@@ -88,8 +122,9 @@
     </div>
 
     <!-- Scripts -->
-    @stack('before-scripts')    
+    @stack('before-scripts')
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     @yield('scripts')
     @stack('after-scripts')
