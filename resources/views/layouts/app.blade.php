@@ -69,12 +69,12 @@
                                 <a id="cartDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="fas fa-shopping-cart"></i>
                                     Your Cart
-                                    @if( count($order->items) > 0 )
+                                    @if( isset($order->items) && count($order->items) > 0 )
                                         <span class="badge" id="cartCount" >{{count($order->items)}}</span>
                                     @endif
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="cartDropdown">
+                                <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="cartDropdown" id="cartContent" >
                                     @if (empty($order) )
                                     <p>No item in your cart</p>
                                     <p>Please add new item</p>
@@ -123,6 +123,9 @@
 
     <!-- Scripts -->
     @stack('before-scripts')
+    <script>
+        var appToken = '{{ csrf_token() }}';
+    </script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>

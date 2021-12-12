@@ -57,11 +57,13 @@ class ProductController extends Controller
             $response['error'] = 1;
             $response['message'] = 'Please login first!';
         } else {
+            //check product valid
             $productItem = Product::find($postData['product']);
             if ( !isset($productItem->id) ) {
                 $response['error'] = 1;
                 $response['message'] = 'Invalid Product!';
             } else {
+                //check if order id exist
                 if ( isset($postData['order']) && $postData['order'] > 0 ) {
                     $order = Order::find($postData['order']);
                     $orderItem = [
@@ -97,7 +99,7 @@ class ProductController extends Controller
                         'items' => $order->items,
                         'cartHtml' => view('frontend.minicart', compact('order'))->render()
                     ];
-                } else {
+                } else { //order not exist then create new order for current user
                     $lastOrder = Order::orderBy('created_at','DESC')->first();
                     $newOrder = new Order();
                     $newOrder->code = '#'.str_pad($lastOrder->id??0 + 1, 8, "0", STR_PAD_LEFT);
@@ -112,7 +114,7 @@ class ProductController extends Controller
                         'quantity' => $postData['quantity']
                     ];
                     OrderItem::create($orderItem);
-
+                    $order = Order::find($newOrder->id);
                     $response['error'] = 0;
                     $response['message'] = 'Add item success!';
                     $response['data'] = [

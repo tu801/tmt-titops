@@ -12,6 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/admin/admin.js', 'public/js/admin.js')
+    .js('resources/js/cart.js', 'public/js/cart.js')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/module/cart.scss', 'public/css/cart');
 

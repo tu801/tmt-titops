@@ -1,5 +1,6 @@
 {
     "/js/admin.js": "/js/admin.js",
+    "/js/cart.js": "/js/cart.js",
     "/css/app.css": "/css/app.css",
     "/css/cart/cart.css": "/css/cart/cart.css",
     "/admin/dist/img/AdminLTELogo.png": "/admin/dist/img/AdminLTELogo.png",
