@@ -4,5 +4,8 @@
     "/css/app.css": "/css/app.css",
     "/css/cart/cart.css": "/css/cart/cart.css",
     "/admin/dist/img/AdminLTELogo.png": "/admin/dist/img/AdminLTELogo.png",
-    "/admin/dist/img/user2-160x160.jpg": "/admin/dist/img/user2-160x160.jpg"
+    "/admin/dist/img/user2-160x160.jpg": "/admin/dist/img/user2-160x160.jpg",
+    "/js/uploadfile.min.js": "/js/uploadfile.min.js",
+    "/resources/css/ajax-upload.min.css": "/resources/css/ajax-upload.min.css",
+    "/css/uploadfile.css": "/css/uploadfile.css"
 }

@@ -42,4 +42,12 @@ class Product extends Model
                 ->where('product_id', $this->id)->get();
         return $this->attributes['slide'] = $imgData;
     }
+
+    public function getImagesAttribute() {
+        if ( $this->attributes['images'] == null || empty($this->attributes['images']) ) {
+            $imgData = ProductImage::select('id', 'user_init', 'product_id', 'name')
+            ->where('product_id', $this->id)->first();
+            return $this->attributes['images'] = $imgData->name;
+        } else return $this->attributes['images'];
+    }
 }

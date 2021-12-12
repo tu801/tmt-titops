@@ -56,12 +56,18 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label" >Image:</label>
+                            <label class="col-sm-2 col-form-label" >Images:</label>
                             <div class="col-sm-10">
-                                <div class="custom-file">
-                                    <input type="file" name="images" class="custom-file-input" id="customFile">
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                <div class="row mb-2" id="uploadedImg">
+                                    @if ( isset($images) && !empty($images) ) 
+                                        @foreach( $images as $img )
+                                            <img src="{{ asset('storage/uploads/products/'.$img->name) }}" class="col-3 img-thumb mb-2"  />
+                                        @endforeach
+                                    @endif
                                 </div>
+                                <div id="mulitplefileuploader" data-upload-url="{{ route('admin.product.uploadImgs', 0) }}" >Upload</div>
+
+                                <div id="status"></div>
                             </div>
                         </div>
 
@@ -83,4 +89,49 @@
         </div>
     </div>
 
+@endsection
+
+@push('headcss')
+<link href="{{ asset('css/uploadfile.css') }}" rel="stylesheet">
+@endpush
+
+@section('scripts')
+<script src="{{ asset('js/uploadfile.min.js') }}"></script>
+<script>
+$(document).ready(function() {
+    var uploadUrl = $('#mulitplefileuploader').attr('data-upload-url');
+
+    var settings = {
+        url: uploadUrl,
+        method: "POST",
+        allowedTypes:"jpg,png,gif,doc,pdf,zip",
+        fileName: "pdtImgs",
+        formData: {'_token': appToken},
+        multiple: true,
+        onSuccess:function(files,data,xhr)
+        {
+            console.log(data);
+            if ( data.error == 0 ) {
+                $('#uploadedImg').html(data.html);
+                swal({
+                    text: "Upload is success!",
+                    icon: "success",
+                });
+            } else {
+                swal({
+                    text: data.message,
+                    icon: "error",
+                });
+            }            
+            
+        },
+        onError: function(files,status,errMsg)
+        {		
+            $("#status").html("<font color='red'>Upload is Failed</font>");
+        }
+    }
+    $("#mulitplefileuploader").uploadFile(settings);
+
+});    
+</script>   
 @endsection

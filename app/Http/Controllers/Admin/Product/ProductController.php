@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductBrand;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -34,8 +35,10 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $user = auth()->user();
         $brands = ProductBrand::get();
-        return view('admin.products.create', compact('brands'));
+        $images = ProductImage::where('user_init', $user->id)->where('product_id', 0)->get(); 
+        return view('admin.products.create', compact('brands', 'images'));
     }
 
     /**
@@ -46,19 +49,24 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
         request()->validate([
             'name' => 'required',
             'price' => 'required',
             'brand_id' => 'required',
-            'images' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            //'images' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $imageName = time().'.'.$request->images->extension();
+        // $imageName = time().'.'.$request->images->extension();
 
-        $request->images->storeAs('public/uploads/products', $imageName);
+        // $request->images->storeAs('public/uploads/products', $imageName);
         $newProduct = new Product($request->all());
-        $newProduct->images = $imageName;
+        // $newProduct->images = $imageName;
         $newProduct->save();
+
+        //update product images
+        ProductImage::where('user_init', $user->id)->where('product_id', 0)
+                    ->update(['product_id' => $newProduct->id]);
 
         return redirect()->route('admin.product.list')
                         ->with('success','Product created successfully.');
@@ -70,9 +78,12 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function detail($id, Product $product)
     {
-        return view('admin.products.show',compact('product'));
+        $product = Product::with(['BrandInfo' => function($qr){
+            $qr->select(['id', 'name']);
+        }])->find($id);
+        return view('admin.products.detail',compact('product'));
     }
 
     /**
@@ -85,7 +96,10 @@ class ProductController extends Controller
     {
         $brands = ProductBrand::get();
         $product = Product::find($id);
-        return view('admin.products.edit',compact('product', 'brands'));
+        $user = auth()->user();
+        $brands = ProductBrand::get();
+        $images = ProductImage::where('user_init', $user->id)->where('product_id', $product->id)->get(); 
+        return view('admin.products.edit',compact('product', 'brands', 'images'));
     }
 
     /**
@@ -133,4 +147,34 @@ class ProductController extends Controller
                         ->with('success','Product deleted successfully');
     }
 
+
+    public function uploadImages($id, Request $request) {
+        $user = auth()->user();
+        $response = [];
+        if ( !isset($user->id) ) {
+            $response['error'] = 1;
+            $response['message'] = 'please Login First!';
+        } else { 
+            $imgUpload = $request->file('pdtImgs'); 
+            $new_name = rand() . '.' . $imgUpload->getClientOriginalExtension();
+            $imgUpload->storeAs('public/uploads/products', $new_name);
+            $imgData = [
+                'user_init' => $user->id,
+                'product_id' => $id ?? 0,
+                'name' => $new_name
+            ];
+            ProductImage::create($imgData);
+
+            $images = ProductImage::where('user_init', $user->id)->where('product_id', $id ?? 0)->get();
+
+            $response = array(
+                'error' => 0,
+                'message'  => 'Multiple Image File Has Been uploaded Successfully',
+                'images' => $images,
+                'html' => view('admin.products.pdt-images', compact('images'))->render()
+            );
+        }
+        
+        return response()->json($response);
+    }
 }

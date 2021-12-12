@@ -56,6 +56,8 @@ Route::group(['middleware' => ['auth']], function() {
 
         Route::delete('delete/{id}', [ProductController::class, 'delete'])->name('delete');
 
+
+        Route::post('upload-images/{id}', [ProductController::class, 'uploadImages'])->name('uploadImgs');
     });
 
 });

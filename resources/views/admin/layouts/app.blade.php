@@ -11,6 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>Admin | {{ $title ?? 'Dashboard' }}</title>
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  @stack('headcss')
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -45,8 +46,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- REQUIRED SCRIPTS -->
 
+<!-- Scripts -->
+<script>
+  var appToken = '{{ csrf_token() }}';
+</script>
 <!-- jQuery -->
 <script src="{{ asset('js/admin.js') }}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@yield('scripts')
 
 </body>
 </html>

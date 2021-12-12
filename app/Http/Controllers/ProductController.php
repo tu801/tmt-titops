@@ -82,6 +82,7 @@ class ProductController extends Controller
                         OrderItem::create($orderItem);
                     }
 
+                    //recalculate order total 
                     $totalItems = OrderItem::where('order_id', $order->id)->get();
                     $total = 0;
                     foreach ($totalItems as $item) {
@@ -102,11 +103,13 @@ class ProductController extends Controller
                 } else { //order not exist then create new order for current user
                     $lastOrder = Order::orderBy('created_at','DESC')->first();
                     $newOrder = new Order();
-                    $newOrder->code = '#'.str_pad($lastOrder->id??0 + 1, 8, "0", STR_PAD_LEFT);
+                    $index = ( !isset($lastOrder->id) ) ? 1 : $lastOrder->id + 1;
+                    $newOrder->code = '#'.str_pad( $index, 8, "0", STR_PAD_LEFT);
                     $newOrder->total = $productItem->price * $postData['quantity'];
                     $newOrder->user_init = $user->id;
                     $newOrder->save();
 
+                    //add order items
                     $orderItem = [
                         'order_id' => $newOrder->id,
                         'product_id' => $postData['product'],
