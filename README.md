@@ -33,5 +33,6 @@ Run the follow command:
 - `docker-compose exec app php artisan key:generate` => generate laravel APP KEY
 - `docker-compose exec app php artisan migrate` => migrate database
 - `docker-compose exec app php artisan db:seed --class=DatabaseSeeder` => insert admin user and roles
+- `docker-compose exec app php artisan storage:link` => public the upload folder 
 
-Please check the online testing version [here](http://okqr.xyz/)
+Please check the online testing version [here](http://titops.embergame.com/)
